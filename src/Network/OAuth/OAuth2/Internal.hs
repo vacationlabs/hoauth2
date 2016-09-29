@@ -100,7 +100,8 @@ accessTokenUrl' oa code gt = (uri, body)
                           , ("client_secret", Just $ oauthClientSecret oa)
                           , ("code", Just code)
                           , ("redirect_uri", oauthCallback oa)
-                          , ("grant_type", gt) ]
+                          , ("grant_type", gt)
+                          ]
 
 -- | Using a Refresh Token.  Obtain a new access token by
 -- sending a refresh token to the Authorization server.

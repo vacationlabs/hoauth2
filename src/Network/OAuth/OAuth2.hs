@@ -11,11 +11,8 @@
 -- A lightweight oauth2 haskell binding.
 ------------------------------------------------------------
 
-module Network.OAuth.OAuth2
-       (module Network.OAuth.OAuth2.HttpClient,
-        module Network.OAuth.OAuth2.Internal
-       )
-       where
+module Network.OAuth.OAuth2 (module X) where
 
-import           Network.OAuth.OAuth2.HttpClient
-import           Network.OAuth.OAuth2.Internal
+import           Network.OAuth.OAuth2.HttpClient as X
+import           Network.OAuth.OAuth2.ServiceAccount as X
+import           Network.OAuth.OAuth2.Internal as X
