@@ -29,3 +29,11 @@ flags:
 # Extra directories used by stack for building
 # extra-include-dirs: [/path/to/dir]
 # extra-lib-dirs: [/path/to/dir]
+
+# extra-include-dirs:
+#   - /opt/local/include/openssl
+#   - /nix/var/nix/profiles/default/include/openssl
+#
+# extra-lib-dirs:
+#   - /opt/local/lib
+#   - /nix/var/nix/profiles/default/lib

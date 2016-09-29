@@ -2,11 +2,10 @@
 
 {-# OPTIONS_HADDOCK -ignore-exports #-}
 
--- | A simple OAuth2 Haskell binding.  (This is supposed to be
--- independent of the http client used.)
+-- | Google Service Account
+-- https://developers.google.com/identity/protocols/OAuth2ServiceAccount
 
-module Network.OAuth.OAuth2.ServiceAccount where
-
+module Network.OAuth.OAuth2.GoogleServiceAccount where
 
 import qualified Network.Google.OAuth2.JWT as JWT
 import qualified Data.ByteString      as BS
@@ -16,9 +15,7 @@ import qualified Data.Text.Encoding as T
 
 import Network.OAuth.OAuth2.Internal
 
--- | Service Account
--- https://developers.google.com/identity/protocols/OAuth2ServiceAccount
-data ServiceAccount = ServiceAccount
+data GoogleServiceAccount = GoogleServiceAccount
   { saPrivateKey    :: BS.ByteString       -- ^ Private Key
   , saEmail         :: BS.ByteString       -- ^ client email
   , saScope         :: [ BS.ByteString ]   -- ^ list of the permissions that the app requests.
@@ -32,7 +29,7 @@ saGrantType = "urn:ietf:params:oauth:grant-type:jwt-bearer"
 
 
 --
-saAccessTokenUrl :: ServiceAccount -> IO (URI, PostBody)
+saAccessTokenUrl :: GoogleServiceAccount -> IO (URI, PostBody)
 saAccessTokenUrl sa = do
   jwtString <- jwt sa
   case jwtString of
@@ -43,7 +40,7 @@ saAccessTokenUrl sa = do
                                           ]
                              )
 
-jwt :: ServiceAccount
+jwt :: GoogleServiceAccount
    -> IO (Either String BS.ByteString) -- ^ JWT assertion
 jwt sa = privateKey >>= JWT.getSignedJWT email delegateEmail scope expire
   where email = bsToText $ saEmail sa

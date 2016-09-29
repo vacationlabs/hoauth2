@@ -62,8 +62,8 @@ stackexchangeKey = OAuth2 { oauthClientId = "xx"
                           , oauthAccessTokenEndpoint = "https://stackexchange.com/oauth/access_token"
                           }
 
-googleServiceAccount :: ServiceAccount
-googleServiceAccount = ServiceAccount
+googleServiceAccount :: GoogleServiceAccount
+googleServiceAccount = GoogleServiceAccount
   { saPrivateKey = "-----BEGIN PRIVATE KEY-----......-----END PRIVATE KEY-----\n"
   , saEmail = "test@iam.gserviceaccount.com"
   , saScope = [ "https://www.googleapis.com/auth/prediction"

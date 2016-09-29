@@ -14,5 +14,5 @@
 module Network.OAuth.OAuth2 (module X) where
 
 import           Network.OAuth.OAuth2.HttpClient as X
-import           Network.OAuth.OAuth2.ServiceAccount as X
+import           Network.OAuth.OAuth2.GoogleServiceAccount as X
 import           Network.OAuth.OAuth2.Internal as X
