@@ -8,42 +8,17 @@
 module Main where
 
 import           Keys                          (googleServiceAccount)
-import          qualified Network.OAuth.OAuth2.ServiceAccount as SA
+import          Network.OAuth.OAuth2
 
-import           Control.Monad                 (liftM)
 import           Data.Aeson                    (FromJSON)
+import           Control.Monad                 (liftM)
 import           Data.Aeson.TH                 (defaultOptions, deriveJSON)
 import qualified Data.ByteString.Char8         as BS
-import qualified Data.ByteString.Lazy.Internal as BL
+import qualified Data.ByteString.Lazy.Char8    as BSL
 import           Data.Text                     (Text)
 import           Network.HTTP.Conduit
 import           Prelude                       hiding (id)
 import           System.Environment            (getArgs)
-
---------------------------------------------------
-
-data Token = Token { issued_to   :: Text
-                   , audience    :: Text
-                   , user_id     :: Maybe Text
-                   , scope       :: Text
-                   , expires_in  :: Integer
-                   , access_type :: Text
-                   } deriving (Show)
-
-
-$(deriveJSON defaultOptions ''Token)
-
-data User = User { id          :: Text
-                 , name        :: Text
-                 , given_name  :: Text
-                 , family_name :: Text
-                 , link        :: Text
-                 , picture     :: Text
-                 , gender      :: Text
-                 , locale      :: Text
-                 } deriving (Show)
-
-$(deriveJSON defaultOptions ''User)
 
 --------------------------------------------------
 
@@ -56,7 +31,28 @@ main = do
         _ -> normalCase mgr
 
 offlineCase :: Manager -> IO ()
-offlineCase mgr = do
-  (authUri, body) <- SA.saAccessTokenUrl googleServiceAccount
+offlineCase = undefined
+
+normalCase :: Manager -> IO ()
+normalCase mgr = do
+  (authUri, body) <- saAccessTokenUrl googleServiceAccount
   print authUri
   print body
+  result <-fetchAT mgr authUri body
+  case result of
+    Right token -> (fileAPI mgr token) >>= print
+    Left e -> print e
+
+fetchAT :: Manager -> URI -> PostBody -> IO (OAuth2Result AccessToken)
+fetchAT mgr uri body = liftM parseResponseJSON (makeReq mgr uri body)
+
+makeReq :: Manager -> URI -> PostBody -> IO (OAuth2Result BSL.ByteString)
+makeReq mgr uri body = liftM handleResponse go
+  where go = do
+          req <- parseUrl $ BS.unpack uri
+          httpLbs (urlEncodedBody body req) mgr
+
+fileAPI :: Manager
+           -> AccessToken
+           -> IO (OAuth2Result BSL.ByteString)
+fileAPI mgr token = authGetBS mgr token "https://www.googleapis.com/drive/v2/files"

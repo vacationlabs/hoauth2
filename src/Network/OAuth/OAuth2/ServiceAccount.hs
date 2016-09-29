@@ -36,10 +36,10 @@ saAccessTokenUrl :: ServiceAccount -> IO (URI, PostBody)
 saAccessTokenUrl sa = do
   jwtString <- jwt sa
   case jwtString of
-    Right e -> error (BS8.unpack e)
-    Left assertion -> return (saAuthEndpoint sa
+    Left e -> error e
+    Right assertion -> return (saAuthEndpoint sa
                              , transform' [ ("grant_type", Just saGrantType)
-                                          , ("assertion", Just $ BS8.pack assertion)
+                                          , ("assertion", Just assertion)
                                           ]
                              )
 

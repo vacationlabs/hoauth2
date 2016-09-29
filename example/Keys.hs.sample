@@ -61,3 +61,15 @@ stackexchangeKey = OAuth2 { oauthClientId = "xx"
                           , oauthOAuthorizeEndpoint = "https://stackexchange.com/oauth"
                           , oauthAccessTokenEndpoint = "https://stackexchange.com/oauth/access_token"
                           }
+
+googleServiceAccount :: ServiceAccount
+googleServiceAccount = ServiceAccount
+  { saPrivateKey = "-----BEGIN PRIVATE KEY-----......-----END PRIVATE KEY-----\n"
+  , saEmail = "test@iam.gserviceaccount.com"
+  , saScope = [ "https://www.googleapis.com/auth/prediction"
+              , "https://www.googleapis.com/auth/drive"
+              ]
+  , saAuthEndpoint = "https://www.googleapis.com/oauth2/v4/token"
+  , saExpireTime = Nothing
+  , saDelegateEmail = Nothing
+  }
