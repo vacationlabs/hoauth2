@@ -13,7 +13,7 @@ packages:
     hackage: uri-bytestring-aeson-0.1.0.6
 snapshots:
 - completed:
-    size: 504771
-    url: https://raw.githubusercontent.com/commercialhaskell/stackage-snapshots/master/lts/12/14.yaml
-    sha256: 3cbd6c83316dd5e2bbc756dc7a2a4e31a31859c3f8b5c720efb6850b08e42649
-  original: lts-12.14
+    size: 499193
+    url: https://raw.githubusercontent.com/commercialhaskell/stackage-snapshots/master/lts/12/1.yaml
+    sha256: 2f67d2e2b2f7926260afa0adb908e24a7df2eed14804d6602fa17a5b5de97f61
+  original: lts-12.1
